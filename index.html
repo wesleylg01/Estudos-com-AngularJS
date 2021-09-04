@@ -28,9 +28,9 @@
                 $scope.app = "Lista Telefonica";
 
                 $scope.contatos = [
-                    {nome: "Pablo", telefone: "98989898988"},
-                    {nome: "Vitor Bueno", telefone: "98989898988"},
-                    {nome: "Igor Vinicius", telefone: "98989898988"}
+                    {nome: "Pablo", telefone: "98989898988", cor: "red"},
+                    {nome: "Vitor Bueno", telefone: "98989898988", cor: "green"},
+                    {nome: "Igor Vinicius", telefone: "98989898988", cor: "blue"}
                 ];
                 $scope.operadoras = [
                     {nome:"Oi", codigo:14, categpria: "Celular"},
@@ -65,18 +65,20 @@
 	<body ng-controller="listaTelefonicaCtrl">
 		<div class="jumbotron">
             <h4>{{app}}</h4>
-            <table class="table">
+            <table class="table" ng-show="contatos.length > 0">
                 <tr>
                     <th> </th>
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>Operadora</th>
+                    <th> </th>
                 </tr>
                 <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
                     <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                     <td>{{contato.nome}}</td>
                     <td>{{contato.telefone}}</td>
                     <td>{{contato.operadora.nome}}</td>
+                    <td><div style="width: 20px; height: 10px;" ng-style="{'background-color': contato.cor}"></div></td>
                 </tr>
             </table>
             <hr>
@@ -86,7 +88,8 @@
                 <option value="">Operadora </option>
             </select>
             <button class="btn btn-primary btn-block" ng-click="adcionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adcionar Contato</button>
-            <button class="btn btn-danger btn-block" ng-click="ExcluirContato(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Excluir Contato</button>
+            <button class="btn btn-danger btn-block" ng-click="ExcluirContato(contatos)" ng-show="isContatoSelecionado(contatos)">Excluir Contato</button>
         </div>
+        <div ng-include="'footer.html'"></div>
 	</body>
 </html>
