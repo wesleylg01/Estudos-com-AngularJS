@@ -44,7 +44,20 @@
                     delete $scope.contato;
                 };
 
-                $scope.classe1 = "selecioando";
+                $scope.ExcluirContato = function(contatos){
+                    $scope.contatos =  contatos.filter(function (contato){
+                        if (!contato.selecionado) return contato;
+                    });
+
+                };
+
+                $scope.isContatoSelecionado = function(contatos){
+                    return contatos.some(function(contato){
+                        return contato.selecionado;
+                    });
+                };
+
+                $scope.classe1 = "selecionado";
                 $scope.classe2 = "negrito";
 			});
 		</script>
@@ -54,11 +67,13 @@
             <h4>{{app}}</h4>
             <table class="table">
                 <tr>
+                    <th> </th>
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>Operadora</th>
                 </tr>
-                <tr ng-class="[classe1, clase2]" ng-repeat="contato in contatos">
+                <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                    <td><input type="checkbox" ng-model="contato.selecionado"/></td>
                     <td>{{contato.nome}}</td>
                     <td>{{contato.telefone}}</td>
                     <td>{{contato.operadora.nome}}</td>
@@ -71,6 +86,7 @@
                 <option value="">Operadora </option>
             </select>
             <button class="btn btn-primary btn-block" ng-click="adcionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adcionar Contato</button>
+            <button class="btn btn-danger btn-block" ng-click="ExcluirContato(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Excluir Contato</button>
         </div>
 	</body>
 </html>
