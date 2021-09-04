@@ -21,6 +21,7 @@
         </style>
         
         <script src="lib/angular/angular.js"> </script>
+        <script src="lib/angular/angular-messages.js"> </script>
 		<script> 
 			angular.module("listaTelefonica",[]);
 			angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
@@ -94,17 +95,19 @@
                         <option value="red">Vermelho </option>
                     </select>
                 </form>
-                <div class="alert alert-danger" ng-show="contatoform.nome.$invalid && contatoform.nome.$dirty">
-                    Por favor preecha o nome para continuar.
-                </div>
-                <div class="alert alert-danger" ng-show="contatoform.telefone.$invalid && contatoform.telefone.$dirty">
-                    Por favor preecha o telefone para continuar.
-                </div>
-                <div class="alert alert-danger" ng-show="contatoform.select_operadora.$invalid && contatoform.select_operadora.$dirty">
-                    Por favor preecha a operadora para continuar.
-                </div>
-                <div class="alert alert-danger" ng-show="contatoform.cor.$invalid && contatoform.cor.$dirty">
-                    Por favor preecha a cor para continuar.
+                <div ng-messages="contatoform.nome.$error" class="alert alert-danger">
+                    <div ng-message="required">
+                        Por favor preecha o nome para continuar.
+                    </div>
+                    <div ng-message="required">
+                        Por favor preecha o telefone para continuar.
+                    </div>
+                    <div ng-message="required">
+                        Por favor preecha a operadora para continuar.
+                    </div>
+                    <div ng-message="required">
+                        Por favor preecha a cor para continuar.
+                    </div>
                 </div>
                 <button class="btn btn-primary btn-block" ng-click="adcionarContato(contato)" ng-disabled="contatoform.$invalid">Adcionar Contato</button>
                 <button class="btn btn-danger btn-block" ng-click="ExcluirContato(contatos)" ng-show="isContatoSelecionado(contatos)">Excluir Contato</button>
