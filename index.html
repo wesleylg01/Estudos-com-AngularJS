@@ -1,5 +1,6 @@
 <html ng-app="listaTelefonica">
 	<head>
+        <meta charset="UTF-8"> 
         <title> Lista Telefonica</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <style>
@@ -11,6 +12,12 @@
                 margin-left: auto;
                 margin-right: auto;
                 }
+            .selecionado{
+                background-color: yellow;
+            }
+            .negrito{
+                font-weight: bold;
+            }
         </style>
         
         <script src="lib/angular/angular.js"> </script>
@@ -25,11 +32,20 @@
                     {nome: "Vitor Bueno", telefone: "98989898988"},
                     {nome: "Igor Vinicius", telefone: "98989898988"}
                 ];
+                $scope.operadoras = [
+                    {nome:"Oi", codigo:14, categpria: "Celular"},
+                    {nome:"Tim", codigo:15, categpria: "Celular"},
+                    {nome:"Claro", codigo:16, categpria: "Celular"},
+                    {nome:"Vivo", codigo:17, categpria: "Fixo"}
+                ];
 
                 $scope.adcionarContato = function(contato){
                     $scope.contatos.push(contato);
                     delete $scope.contato;
                 };
+
+                $scope.classe1 = "selecioando";
+                $scope.classe2 = "negrito";
 			});
 		</script>
 	</head>
@@ -40,16 +56,21 @@
                 <tr>
                     <th>Nome</th>
                     <th>Telefone</th>
+                    <th>Operadora</th>
                 </tr>
-                <tr ng-repeat="contato in contatos">
+                <tr ng-class="[classe1, clase2]" ng-repeat="contato in contatos">
                     <td>{{contato.nome}}</td>
                     <td>{{contato.telefone}}</td>
+                    <td>{{contato.operadora.nome}}</td>
                 </tr>
             </table>
             <hr>
             <input class="form-control" type="text" ng-model="contato.nome"/>
             <input class="form-control" type="text" ng-model="contato.telefone"/>
-            <button class="btn btn-primary btn-block" ng-click="adcionarContato(contato)" >Adcionar Contato</button>
+            <select class="form-control" ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categpria for operadora in operadoras">
+                <option value="">Operadora </option>
+            </select>
+            <button class="btn btn-primary btn-block" ng-click="adcionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adcionar Contato</button>
         </div>
 	</body>
 </html>
